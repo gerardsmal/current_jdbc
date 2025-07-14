@@ -1,0 +1,20 @@
+package com.betacom.jdbc.process;
+
+import com.betacom.jdbc.exception.AcademyException;
+import com.betacom.jdbc.simgletone.SQLConfiguration;
+
+public class ProcessJDBC {
+
+	public boolean execute() {
+		System.out.println("Begin ProcessJDBC");
+		try {
+			SQLConfiguration.getInstance().getConnection();
+			System.out.println("Connection with db ok");
+		} catch (AcademyException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return true;
+	}
+}
