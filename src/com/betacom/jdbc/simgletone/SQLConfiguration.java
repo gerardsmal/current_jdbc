@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import com.betacom.jdbc.exception.AcademyException;
@@ -60,5 +61,12 @@ public class SQLConfiguration {
 		return con;
 	}
 	
-	
+	public void setAutoCommit() throws SQLException{
+		con.setAutoCommit(true);
+	}
+
+	public void setTransaction() throws SQLException{
+		con.setAutoCommit(false);
+	}
+
 }

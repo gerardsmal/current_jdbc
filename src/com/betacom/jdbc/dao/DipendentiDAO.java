@@ -52,6 +52,55 @@ public class DipendentiDAO {
 		
 	}
 	
+	public List<Dipendenti> findGeneric(String qryName,Object[] parameters) throws Exception{
+		
+		String qry = SQLConfiguration.getInstance().getQuery(qryName);
+		System.out.println("Query:" + qry);
+		
+		List<Map<String, Object>> lD = db.list(qry, parameters);
 	
+		return lD.stream()
+				.map(row -> new Dipendenti(
+						(Integer)row.get("id_dipendenti"), 
+						(String)row.get("nome"), 
+						(String)row.get("cognome"), 
+						dateToLocalDate(row.get("data_assunzione")), 
+						(String)row.get("telefono"), 
+						(String)row.get("manzione"), 
+						((BigDecimal)row.get("stipendio")).doubleValue(), 
+						(Integer)row.get("id_ufficio"), 
+						(String)row.get("comune_nascita"))).collect(Collectors.toList());
+		
+	}
 
+	
+	public Dipendenti findById(Object[] parameters) throws Exception{
+		
+		String qry = SQLConfiguration.getInstance().getQuery("dipendenti.byId");
+		System.out.println("Query:" + qry);
+		
+		Map<String, Object> row = db.get(qry, parameters);
+	
+		return  new Dipendenti(
+						(Integer)row.get("id_dipendenti"), 
+						(String)row.get("nome"), 
+						(String)row.get("cognome"), 
+						dateToLocalDate(row.get("data_assunzione")), 
+						(String)row.get("telefono"), 
+						(String)row.get("manzione"), 
+						((BigDecimal)row.get("stipendio")).doubleValue(), 
+						(Integer)row.get("id_ufficio"), 
+						(String)row.get("comune_nascita"));
+		
+	}
+
+
+	public Long count(String qryName,Object[] parameters) throws Exception{
+		
+		String qry = SQLConfiguration.getInstance().getQuery(qryName);
+		System.out.println("Query:" + qry);
+		
+		return db.count(qry, parameters);
+	
+	}
 }

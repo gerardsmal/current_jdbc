@@ -83,6 +83,109 @@ public class SQLManager {
 		
 		
 	}
+
+	public List<Map<String, Object>> list(String qry, Object[] params) throws AcademyException{
+		try {
+			PreparedStatement cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry);  // statement compilation
+			
+			cmd = createSet(cmd, params);
+			
+			ResultSet res = cmd.executeQuery();
+			
+			return resultsetToList(res);
+			
+		} catch (Exception e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+
+	/*
+	 * execute count with JDBC with parameters
+	 */
+	public Long count(String qry, Object[] params) throws AcademyException{
+		try {
+			String qryCount = "select count(*) as numero from ( " + qry + " ) as numero";
+			
+			PreparedStatement cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qryCount);  // statement compilation
+			
+			cmd = createSet(cmd, params);
+			
+			ResultSet res = cmd.executeQuery();
+			res.next();
+			
+			return (Long) res.getObject("numero");
+			
+		} catch (Exception e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+	
+	/*
+	 * execute select with result single row .
+	 */
+	public Map<String, Object> get(String qry, Object[] params) throws AcademyException{
+		try {
+			PreparedStatement cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry);  // statement compilation
+			
+			cmd = createSet(cmd, params);
+			
+			ResultSet res = cmd.executeQuery();
+			
+			return resultsetToMap(res);
+			
+		} catch (Exception e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+	
+	/*
+	 * update function
+	 * this function is used for insert
+	 * 							 update
+	 *                           delete
+	 */
+	
+	public int update(String qry, Object[] params) throws AcademyException{
+	
+		int rc = 0;         // init records count
+		try {
+			PreparedStatement cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry);  // statement compilation
+
+			cmd = createSet(cmd, params);  // update preparated statements with parameters
+			
+			rc = cmd.executeUpdate();  // execute update operations
+									   // rc = rows number implicated		
+			
+			
+			
+		} catch (Exception e) {
+			throw new AcademyException(e.getMessage());
+		}
+		
+		
+		
+		return rc;
+		
+	}
+	
+	
+
+	/*
+	 * insert parameters in PreparedStatement
+	 */
+	private PreparedStatement createSet(PreparedStatement cmd, Object[] params) {
+		int pIdx = 1;
+		
+		for (Object o:params) {
+			try {
+				cmd.setObject(pIdx++, o);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return cmd;
+	}
+
 	
 	
 	/*
@@ -110,6 +213,25 @@ public class SQLManager {
 		return rows;
 		
 	}
+	/*
+	 * transform resultset in MAP (single row)
+	 */
+	private Map<String, Object> resultsetToMap(ResultSet rs) throws SQLException{
+		ResultSetMetaData md = rs.getMetaData();   // retrieve metadata resulset
+		int columns = md.getColumnCount();         // retrieve query column number
+		
+		rs.next();
+		
+		Map<String, Object> row = new HashMap<String, Object>(); // init row
+		for (int i=1;i <= columns; ++i) {
+			row.put(md.getColumnName(i), rs.getObject(i)); // load map with key = query metadata 
+														   //               value = reultset value
+		}
+	
+		return row;
+		
+	}
+	
 	
 	
 }
