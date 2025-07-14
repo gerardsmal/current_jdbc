@@ -21,10 +21,10 @@ public class Dipendenti {
 	private Integer idDipenti;
 	private String 	nome;
 	private String 	cognome;
-	private Date dataAssunzione;
+	private LocalDate dataAssunzione;
 	private String 	telefono;
 	private String 	manzione;
-	private BigDecimal 	stipendio;
+	private Double 	stipendio;
 	private Integer idUfficio;
 	private String 	comuneNascita;
 	
@@ -33,8 +33,8 @@ public class Dipendenti {
 	}
 
 	
-	public Dipendenti(Integer idDipenti, String nome, String cognome, Date dataAssunzione, String telefono,
-			String manzione, BigDecimal stipendio, Integer idUfficio, String comuneNascita) {
+	public Dipendenti(Integer idDipenti, String nome, String cognome, LocalDate dataAssunzione, String telefono,
+			String manzione, Double stipendio, Integer idUfficio, String comuneNascita) {
 		super();
 		this.idDipenti = idDipenti;
 		this.nome = nome;
@@ -66,10 +66,10 @@ public class Dipendenti {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public Date getDataAssunzione() {
+	public LocalDate getDataAssunzione() {
 		return dataAssunzione;
 	}
-	public void setDataAssunzione(Date dataAssunzione) {
+	public void setDataAssunzione(LocalDate dataAssunzione) {
 		this.dataAssunzione = dataAssunzione;
 	}
 	public String getTelefono() {
@@ -84,10 +84,10 @@ public class Dipendenti {
 	public void setManzione(String manzione) {
 		this.manzione = manzione;
 	}
-	public BigDecimal getStipendio() {
+	public Double getStipendio() {
 		return stipendio;
 	}
-	public void setStipendio(BigDecimal stipendio) {
+	public void setStipendio(Double stipendio) {
 		this.stipendio = stipendio;
 	}
 	public Integer getIdUfficio() {
