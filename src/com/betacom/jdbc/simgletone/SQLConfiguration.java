@@ -13,8 +13,9 @@ import com.betacom.jdbc.utilities.SQLManager;
 public class SQLConfiguration {
 	private static SQLConfiguration instance = null;
 	private static Properties prop = new Properties();
+	private static Properties queries = new Properties();	
 	
-	private Connection con = null;
+	private Connection con = null;  // connection to database
 	
 	
 	private SQLConfiguration() {}
@@ -32,6 +33,10 @@ public class SQLConfiguration {
 			InputStream input = new FileInputStream("./sql.properties");
 			prop.load(input);
 			
+			InputStream sql = new FileInputStream("./queries.properties");
+			queries.load(sql);
+			
+			
 		} catch (FileNotFoundException e) {
 			throw new AcademyException(e.getMessage());
 		}  catch (IOException e) {
@@ -43,6 +48,11 @@ public class SQLConfiguration {
 		return prop.getProperty(p);
 	}
 
+	public String getQuery(String p) {
+		return queries.getProperty(p);
+	}
+
+	
 	public Connection getConnection() throws AcademyException{
 		if (con == null) {
 			con = new SQLManager().getConnection();

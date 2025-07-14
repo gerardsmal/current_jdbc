@@ -10,8 +10,13 @@ public class ProcessJDBC {
 		try {
 			SQLConfiguration.getInstance().getConnection();
 			System.out.println("Connection with db ok");
+			
+			ProcessQuery pro = new ProcessQuery();
+			
+			pro.execute();
 		} catch (AcademyException e) {
 			e.printStackTrace();
+			return false;
 		}
 		
 		
