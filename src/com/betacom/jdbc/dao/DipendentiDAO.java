@@ -84,7 +84,8 @@ public class DipendentiDAO {
 		if (row == null)
 			return Optional.empty();
 		else {
-		return  Optional.ofNullable(new Dipendenti(
+		return  Optional.ofNullable(new Dipendenti(         //get an instance of this Optional class with the specified 
+															// value of the specified type.
 						(Integer)row.get("id_dipendenti"), 
 						(String)row.get("nome"), 
 						(String)row.get("cognome"), 
