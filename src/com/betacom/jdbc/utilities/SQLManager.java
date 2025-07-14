@@ -220,7 +220,8 @@ public class SQLManager {
 		ResultSetMetaData md = rs.getMetaData();   // retrieve metadata resulset
 		int columns = md.getColumnCount();         // retrieve query column number
 		
-		rs.next();
+		if (!rs.next())
+			return null;
 		
 		Map<String, Object> row = new HashMap<String, Object>(); // init row
 		for (int i=1;i <= columns; ++i) {

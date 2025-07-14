@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.betacom.jdbc.models.Dipendenti;
@@ -74,14 +75,16 @@ public class DipendentiDAO {
 	}
 
 	
-	public Dipendenti findById(Object[] parameters) throws Exception{
+	public Optional<Dipendenti>   findById(Object[] parameters) throws Exception{
 		
 		String qry = SQLConfiguration.getInstance().getQuery("dipendenti.byId");
 		System.out.println("Query:" + qry);
 		
 		Map<String, Object> row = db.get(qry, parameters);
-	
-		return  new Dipendenti(
+		if (row == null)
+			return Optional.empty();
+		else {
+		return  Optional.ofNullable(new Dipendenti(
 						(Integer)row.get("id_dipendenti"), 
 						(String)row.get("nome"), 
 						(String)row.get("cognome"), 
@@ -90,8 +93,8 @@ public class DipendentiDAO {
 						(String)row.get("manzione"), 
 						((BigDecimal)row.get("stipendio")).doubleValue(), 
 						(Integer)row.get("id_ufficio"), 
-						(String)row.get("comune_nascita"));
-		
+						(String)row.get("comune_nascita")));
+		}
 	}
 
 

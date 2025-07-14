@@ -1,6 +1,7 @@
 package com.betacom.jdbc.process.implementations;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.betacom.jdbc.dao.DipendentiDAO;
 import com.betacom.jdbc.models.Dipendenti;
@@ -37,8 +38,11 @@ public class ProcessQuery implements SQLProcess{
 			lD.forEach(d -> System.out.println(d));
 			
 			System.out.println("findById");		
-			Dipendenti dip = daoD.findById(new Object[] {5});	
-			System.out.println(dip);
+			Optional<Dipendenti> dip = daoD.findById(new Object[] {5});	
+			if (dip.isEmpty())
+				System.out.println("***** dipendenti non troavto" );
+			else
+				System.out.println(dip.get());  // get is used to indicate isEmpty tested
 			
 			System.out.println("count with 2 parameters");		
 			Long c = daoD.count("dipendenti.mansione-and-salary", new Object[] {"impiegato" , 1500});
