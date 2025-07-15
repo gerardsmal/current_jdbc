@@ -30,6 +30,9 @@ public class ProcessJDBC {
 			pro.execute();
 
 		
+			SQLConfiguration.getInstance().closeConnection();
+			System.out.println("Connection is closed....");
+			
 		} catch (AcademyException e) {
 			e.printStackTrace();
 			return false;

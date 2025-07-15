@@ -42,6 +42,7 @@ public class SQLManager {
 			throw new AcademyException(e.getMessage());
 		}
 	}
+	
 	/*
 	 * commit sql statements
 	 */

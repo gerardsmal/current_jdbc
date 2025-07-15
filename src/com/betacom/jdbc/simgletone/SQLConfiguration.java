@@ -60,6 +60,20 @@ public class SQLConfiguration {
 		}
 		return con;
 	}
+	/*
+	 * Close connection
+	 */
+	public void closeConnection() throws AcademyException {
+		try {
+			if (con != null) {
+				con.close();
+			}
+		} catch (Exception e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+	
+	
 	
 	public void setAutoCommit() throws SQLException{
 		con.setAutoCommit(true);
