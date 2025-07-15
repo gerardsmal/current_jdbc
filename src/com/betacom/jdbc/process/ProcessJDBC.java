@@ -2,6 +2,7 @@ package com.betacom.jdbc.process;
 
 import com.betacom.jdbc.exception.AcademyException;
 import com.betacom.jdbc.process.implementations.ProcessQuery;
+import com.betacom.jdbc.process.implementations.ProcessTransaction;
 import com.betacom.jdbc.process.implementations.ProcessUpdate;
 import com.betacom.jdbc.process.interfaces.SQLProcess;
 import com.betacom.jdbc.simgletone.SQLConfiguration;
@@ -23,6 +24,12 @@ public class ProcessJDBC {
 			pro = new ProcessUpdate();
 			pro.execute();
 			
+
+//			System.out.println("Process TRANSACTION ****************************");
+//			pro = new ProcessTransaction();
+//			pro.execute();
+
+		
 		} catch (AcademyException e) {
 			e.printStackTrace();
 			return false;

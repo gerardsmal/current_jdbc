@@ -43,6 +43,29 @@ public class SQLManager {
 		}
 	}
 	/*
+	 * commit sql statements
+	 */
+	public void commit() throws AcademyException{
+		try {
+			SQLConfiguration.getInstance().getConnection().commit();
+		} catch (SQLException e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+	
+	/*
+	 * rollback sql statements
+	 */
+	public void rollback() throws AcademyException{
+		try {
+			SQLConfiguration.getInstance().getConnection().rollback();  
+		} catch (SQLException e) {
+			throw new AcademyException(e.getMessage());
+		}
+	}
+	
+	
+	/*
 	 * Table list
 	 */
 	public List<String> listOfTable(String dbName) throws AcademyException {
@@ -178,7 +201,7 @@ public class SQLManager {
 					if (generatedKeys.next()) {                          // we create resultset to retrieve generated key
 						rc = generatedKeys.getInt(1);
 					} else {
-						throw new SQLException("Create failed, no iD obtained");
+						throw new SQLException("Problem with generated key, no iD obtained");
 					}
 				}
 			}

@@ -1,6 +1,7 @@
 package com.betacom.jdbc.process.implementations;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.betacom.jdbc.dao.ClientiDAO;
 import com.betacom.jdbc.models.Clienti;
@@ -32,15 +33,24 @@ public class ProcessUpdate implements SQLProcess{
 			
 			
 			
+			params = new Object[] {
+				"Giovanni Bella",
+				"Via Nera, 25 Bari",
+				id
+			};
+			
+			int numero = daoC.update("clienti.update", params);
+			
+			Optional<Clienti> cli = daoC.findById(new Object[] {id});
+			if (cli.isEmpty())
+				System.out.println("Cliente " + id + " non trovato");
+			else
+				System.out.println(cli.get());
 			
 			
 			
 			
-			
-			
-			
-			
-			int numero = daoC.delete("clienti.delete", new Object[] {id});
+			numero = daoC.delete("clienti.delete", new Object[] {id});
 			System.out.println("Numero di righe cancellate:" + numero);
 			
 			

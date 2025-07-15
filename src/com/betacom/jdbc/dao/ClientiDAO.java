@@ -35,6 +35,18 @@ public class ClientiDAO {
 		return numero;
 	}
 
+	public int update(String qryName, Object[] parameters) throws Exception{
+		int numero = 0;
+		
+		String qry = SQLConfiguration.getInstance().getQuery(qryName);
+		System.out.println("Query:" + qry);
+		
+		numero = db.update(qry, parameters);
+		
+		return numero;
+	}
+
+	
 	public int delete(String qryName, Object[] parameters) throws Exception{
 		int numero = 0;
 		
@@ -83,7 +95,7 @@ public class ClientiDAO {
 	}
 
 	
-	public Optional<Clienti>   findById(Object[] parameters) throws Exception{
+	public Optional<Clienti> findById(Object[] parameters) throws Exception{
 		
 		String qry = SQLConfiguration.getInstance().getQuery("clienti.byId");
 		System.out.println("Query:" + qry);
