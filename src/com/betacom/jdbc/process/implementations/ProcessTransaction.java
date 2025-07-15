@@ -41,8 +41,8 @@ public class ProcessTransaction implements SQLProcess{
 			
 			Optional<Dipendenti> dip = daoD.findById(new Object[] { 5 });
 			if(dip.isEmpty()) {
-				System.out.println("Dipendenti non trovato .. execute rollback..");
 				db.rollback();
+				throw new AcademyException  ("Dipendenti non trovato .. execute rollback..");
 			}
 			
 			
@@ -54,13 +54,27 @@ public class ProcessTransaction implements SQLProcess{
 			
 			int idRapporto = daoR.insert("rapporti-clienti.insert", params);
 			
-			List<RapportiClienti> lR = daoR.findAll();
-			lR.forEach(r -> System.out.println(r));
+			System.out.println("rapporto cliente inserito pKey:" + idRapporto);
+			
+			Optional<RapportiClienti> rap = daoR.findById(new Object[] { idRapporto});
+			if (rap.isEmpty()) {
+				db.rollback();
+				throw new AcademyException  ("Rapporto non trovato .. execute rollback..");
+			} 
+			
+			System.out.println("Rapporto:" + rap.get());
+			
+			int numero = 0;
+
+			numero = daoR.delete("rapporti-clienti.delete", new Object[] {idRapporto});    
+			System.out.println("Rapporti cancellati :" + numero);
+
+
+			numero = daoC.delete("clienti.delete", new Object[] {idCliente});
+			System.out.println("Numero di righe cancellate:" + numero);
 			
 			
-			
-			
-			
+
 			
 			System.out.println("execute commit.....");
 			db.commit();

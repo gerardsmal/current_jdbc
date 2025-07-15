@@ -25,9 +25,9 @@ public class ProcessJDBC {
 			pro.execute();
 			
 
-//			System.out.println("Process TRANSACTION ****************************");
-//			pro = new ProcessTransaction();
-//			pro.execute();
+			System.out.println("Process TRANSACTION ****************************");
+			pro = new ProcessTransaction();
+			pro.execute();
 
 		
 		} catch (AcademyException e) {
