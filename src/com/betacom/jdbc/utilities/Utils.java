@@ -24,17 +24,5 @@ public class Utils {
 	    }
 			
 	} 
-	/*
-	 * Build parameters map for SQLManager
-	 * key = Object position
-	 * value = parameter value
-	 */
-//	public static Map<Integer, Object> buildParameters(Object[] p){
-//		Map<Integer, Object> params = new HashMap<Integer, Object>();
-//		int pIdx = 1;
-//		for (Object o:p) {
-//			params.put(pIdx++, o);
-//		}
-//		return params;
-//	}
+
 }

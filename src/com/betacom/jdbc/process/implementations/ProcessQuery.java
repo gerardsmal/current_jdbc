@@ -38,9 +38,9 @@ public class ProcessQuery implements SQLProcess{
 			lD.forEach(d -> System.out.println(d));
 			
 			System.out.println("findById");		
-			Optional<Dipendenti> dip = daoD.findById(new Object[] {5});	
+			Optional<Dipendenti> dip = daoD.findById(new Object[] {50});	
 			if (dip.isEmpty())
-				System.out.println("***** dipendenti non troavto" );
+				System.out.println("***** dipendenti non trovato" );
 			else
 				System.out.println(dip.get());  // get is used to indicate isEmpty tested
 			

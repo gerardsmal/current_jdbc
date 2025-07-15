@@ -84,17 +84,16 @@ public class DipendentiDAO {
 		if (row == null)
 			return Optional.empty();
 		else {
-		return  Optional.ofNullable(new Dipendenti(         //get an instance of this Optional class with the specified 
-															// value of the specified type.
-						(Integer)row.get("id_dipendenti"), 
-						(String)row.get("nome"), 
-						(String)row.get("cognome"), 
-						dateToLocalDate(row.get("data_assunzione")), 
-						(String)row.get("telefono"), 
-						(String)row.get("manzione"), 
-						((BigDecimal)row.get("stipendio")).doubleValue(), 
-						(Integer)row.get("id_ufficio"), 
-						(String)row.get("comune_nascita")));
+			return  Optional.ofNullable(new Dipendenti(         //get an instance of this Optional class with the specified 
+							(Integer)row.get("id_dipendenti"),  // value of the specified type.
+							(String)row.get("nome"), 
+							(String)row.get("cognome"), 
+							dateToLocalDate(row.get("data_assunzione")), 
+							(String)row.get("telefono"), 
+							(String)row.get("manzione"), 
+							((BigDecimal)row.get("stipendio")).doubleValue(), 
+							(Integer)row.get("id_ufficio"), 
+							(String)row.get("comune_nascita")));
 		}
 	}
 

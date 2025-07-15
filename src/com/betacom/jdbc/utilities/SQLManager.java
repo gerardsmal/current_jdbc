@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -146,17 +147,41 @@ public class SQLManager {
 	 */
 	
 	public int update(String qry, Object[] params) throws AcademyException{
+		return update(qry, params, false);
+	}
 	
+	/*
+	 * Update with return primary key inserted (viewPK = true);
+	 */
+	public int update(String qry, Object[] params, boolean viewPK) throws AcademyException{
+		
 		int rc = 0;         // init records count
 		try {
-			PreparedStatement cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry);  // statement compilation
-
+			PreparedStatement cmd = null;
+			if (viewPK)
+				cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry,
+						Statement.RETURN_GENERATED_KEYS);     // return generated key
+			else
+				cmd = SQLConfiguration.getInstance().getConnection().prepareStatement(qry);  // statement compilation
+			
+			
 			cmd = createSet(cmd, params);  // update preparated statements with parameters
 			
 			rc = cmd.executeUpdate();  // execute update operations
 									   // rc = rows number implicated		
 			
-			
+			/*
+			 * retrieve value of auto increment
+			 */
+			if (viewPK) {
+				try(ResultSet generatedKeys = cmd.getGeneratedKeys()){   // with getGeneratedKeys we can access to generated key
+					if (generatedKeys.next()) {                          // we create resultset to retrieve generated key
+						rc = generatedKeys.getInt(1);
+					} else {
+						throw new SQLException("Create failed, no iD obtained");
+					}
+				}
+			}
 			
 		} catch (Exception e) {
 			throw new AcademyException(e.getMessage());
@@ -167,7 +192,6 @@ public class SQLManager {
 		return rc;
 		
 	}
-	
 	
 
 	/*
@@ -220,7 +244,7 @@ public class SQLManager {
 		ResultSetMetaData md = rs.getMetaData();   // retrieve metadata resulset
 		int columns = md.getColumnCount();         // retrieve query column number
 		
-		if (!rs.next())
+		if (!rs.next())   // no row found
 			return null;
 		
 		Map<String, Object> row = new HashMap<String, Object>(); // init row
